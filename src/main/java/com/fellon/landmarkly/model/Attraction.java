@@ -2,33 +2,39 @@ package com.fellon.landmarkly.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
-import java.util.List;
+
+import java.util.Set;
 import java.util.UUID;
 
-@Data
-@Table(name = "addresses")
+@Entity
+@Table(name = "attractions")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@AllArgsConstructor
-@Entity
-public class Atraction {
+@Builder
+
+public class Attraction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false, length = 1000)
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private AttractionType attractionType;
 
-    // Связь с Address
     @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
-    private Address address;
-
+    @JoinTable(
+            name = "attraction_services",
+            joinColumns = @JoinColumn(name = "attraction_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private Set<Service> services;
+    @OneToOne(mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
+    private TicketInfo ticketInfo;
 
 }

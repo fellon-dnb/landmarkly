@@ -1,22 +1,38 @@
 package com.fellon.landmarkly.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
 import java.util.UUID;
 
-@Data
 @Entity
+@Data
+@Table(name = "addresses")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@AllArgsConstructor
+
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @UuidGenerator
     private UUID id;
- private Integer building;
- private String street;
+    @Column(nullable = false)
+    private Integer building;
+    @Column(nullable = false, length = 100)
+    private String street;
+    @Column(nullable = false, length = 100)
     private String city;
+    @Column(nullable = false, length = 100)
     private String region;
+
     private Double longitude;
     private Double latitude;
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL); // один адрес - много мест
-    private List<Atraction> landmarks;
+
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attraction> attractions;
 }
