@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@AllArgsConstructor
+
 
 public class Address {
     @Id
