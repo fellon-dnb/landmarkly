@@ -1,14 +1,17 @@
 package com.fellon.landmarkly.controller;
 
-import com.fellon.landmarkly.model.Attraction;
+import com.fellon.landmarkly.dtos.AttractionDto;
 import com.fellon.landmarkly.service.AttractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/attractions")
 public class AttractionController {
+
     private final AttractionService attractionService;
 
     @Autowired
@@ -17,16 +20,27 @@ public class AttractionController {
     }
 
     @GetMapping
-    public List<Attraction> getAllAttractions() {
+    public List<AttractionDto> getAllAttractions() {
         return attractionService.getAllAttractions();
     }
 
     @PostMapping
-    public Attraction createAttraction(@RequestBody Attraction attraction) {
-        return attractionService.createAttraction(attraction);
+    public AttractionDto createAttraction(@RequestBody AttractionDto attractionDto) {
+        return attractionService.createAttraction(attractionDto);
     }
-@GetMapping("/search")
-    public List<Attraction> searchAttractionsByNames(@RequestParam String name) {
-        return attractionService.searchAttractionsByName(name);
+
+    @GetMapping("/{id}")
+    public AttractionDto getAttractionById(@PathVariable UUID id) {
+        return attractionService.getAttractionById(id);
+    }
+
+    @PutMapping("/{id}")
+    public AttractionDto updateAttraction(@PathVariable UUID id, @RequestBody AttractionDto attractionDto) {
+        return attractionService.updateAttraction(id, attractionDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAttraction(@PathVariable UUID id) {
+        attractionService.deleteAttraction(id);
     }
 }

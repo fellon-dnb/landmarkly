@@ -33,7 +33,7 @@ public class Attraction {
             joinColumns = @JoinColumn(name = "attraction_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    private Set<Service> services;
+    private Set<ServiceEntity> services;
     @OneToOne(mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
     private TicketInfo ticketInfo;
 
