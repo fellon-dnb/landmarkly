@@ -1,13 +1,18 @@
 package com.fellon.landmarkly.model;
 
-import jakarta.persistence.Entity;
-
 import jakarta.persistence.*;
-import lombok.Data;
-
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
+import java.util.List;
 import java.util.UUID;
 
 @Data
+@Table(name = "addresses")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Atraction {
     @Id
@@ -25,11 +30,5 @@ public class Atraction {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    // Связь с Service (многие ко многим)
-    @ManyToMany
-    private List<Service> services;
 
-    // Связь с TicketInfo (один к одному)
-    @OneToOne(mappedBy = "attraction")
-    private TicketInfo ticketInfo;
 }
